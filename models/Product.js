@@ -15,31 +15,38 @@ module.exports = function(sequelize) {
     },
     name: {
       type: Sequelize.STRING,
-      allowNull: false
+      allowNull: false,
+      defaultValue: ''
     },
     slug: {
       type: Sequelize.STRING,
-      allowNull: false
+      allowNull: false,
+      defaultValue: ''
     },
     alt_names: {
       type: Sequelize.TEXT,
-      allowNull: false
+      allowNull: false,
+      defaultValue: ''
     },
     description: {
       type: Sequelize.TEXT,
-      allowNull: false
+      allowNull: false,
+      defaultValue: ''
     },
     range: {
       type: Sequelize.STRING,
-      allowNull: false
+      allowNull: false,
+      defaultValue: ''
     },
     model_no: {
       type: Sequelize.STRING,
-      allowNull: false
+      allowNull: false,
+      defaultValue: ''
     },
     price: {
       type: Sequelize.STRING,
-      allowNull: false
+      allowNull: false,
+      defaultValue: ''
     }
   }, {
     underscored: true

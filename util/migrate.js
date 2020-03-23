@@ -41,7 +41,7 @@ connectToMysql(config.mysqlConnectionString).then(async sequelize => {
   }
 
   for (const tag of tags) {
-    await Tag.create({ id: tag._id, tag_category_id: tag.category, ...tag });
+    await Tag.create({ id: tag._id, tag_category_id: tag.category, name: tag.name });
   }
 
   for (const maker of makers) {

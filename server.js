@@ -30,10 +30,10 @@ connectToMysql(config.mysqlConnectionString).then(sequelize => {
     context: async () => {
       return { sequelize };
     },
-    formatError: err => {
-      console.error(err);
-      return err;
-    },
+    // formatError: err => {
+    //   console.error(err);
+    //   return err;
+    // },
     cacheControl: {
       defaultMaxAge: 10,
     },

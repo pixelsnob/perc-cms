@@ -12,7 +12,8 @@ module.exports = function(sequelize) {
     },
     name: {
       type: Sequelize.STRING,
-      allowNull: false
+      allowNull: false,
+      defaultValue: ''
     }
   }, {
     underscored: true
@@ -20,8 +21,8 @@ module.exports = function(sequelize) {
 
   const TagCategory = TagCategoryModel(sequelize);
   
-  Tag.belongsTo(TagCategory);
-  TagCategory.hasMany(Tag);
+  Tag.belongsTo(TagCategory, { foreignKey: 'tag_category_id' });
+  TagCategory.hasMany(Tag, { foreignKey: 'tag_category_id' });
   
   return Tag;
 

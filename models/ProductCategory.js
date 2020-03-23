@@ -11,7 +11,8 @@ module.exports = function(sequelize) {
     },
     name: {
       type: Sequelize.STRING,
-      allowNull: false
+      allowNull: false,
+      defaultValue: ''
     }
   }, {
     underscored: true

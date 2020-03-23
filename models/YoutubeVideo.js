@@ -14,13 +14,19 @@ module.exports = function(sequelize) {
       allowNull: false
     },
     start_time: {
-      type: Sequelize.INTEGER
+      type: Sequelize.INTEGER,
+      //allowNull: false,
+      //defaultValue: 0
     },
     end_time: {
-      type: Sequelize.INTEGER
+      type: Sequelize.INTEGER,
+      //allowNull: false,
+      defaultValue: 0
     },
     description: {
-      type: Sequelize.TEXT
+      type: Sequelize.TEXT,
+      allowNull: false,
+      defaultValue: ''
     },
   }, {
     underscored: true

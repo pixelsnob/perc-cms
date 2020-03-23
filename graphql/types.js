@@ -46,10 +46,12 @@ const typeDefs = gql`
     makers: [ Maker ]
   }
 
+  
   type Mutation {
     addTag(name: String): Tag
     addProduct(
-      name: String
+      name: String,
+      tags: [ ID! ]
     ): Product
   }
   
