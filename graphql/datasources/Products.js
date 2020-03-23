@@ -23,12 +23,13 @@ class ProductsDatasource extends SequelizeDatasource {
   async addProduct(data) {
     const createdProduct = await this.model.create(data);
     await createdProduct.addTags(data.tags);
-    const savedProduct = await this.model.findByPk(createdProduct.id, { include: { all: true, nested: true, required: false  }});
+    const savedProduct = await this.model.findByPk(createdProduct.id, {
+      include: { all: true, nested: true, required: false  }
+    });
     return this.productReducer(savedProduct);
   }
 
   productReducer(product) {
-    console.log(product);
     return {
       id: product.get('id'),
       name: product.get('name'),
