@@ -23,13 +23,16 @@ connectToMysql(config.mysqlConnectionString).then(async sequelize => {
   const makers = await mongoDb.collection('makers').find().toArray();
   const youtubeVideos = await mongoDb.collection('youtube_videos').find().toArray();
 
-  const ProductCategory = ProductCategoryModel(sequelize);
   const Product = ProductModel(sequelize);
+  Product.associate();
+
+  const ProductCategory = ProductCategoryModel(sequelize);
   const TagCategory = TagCategoryModel(sequelize);
   const Tag = TagModel(sequelize);
   const Maker = MakerModel(sequelize);
   const YoutubeVideo = YoutubeVideoModel(sequelize);
 
+  await sequelize.drop();
   await sequelize.sync({ force: true });
 
   for (const productCategory of productCategories) {
@@ -41,7 +44,8 @@ connectToMysql(config.mysqlConnectionString).then(async sequelize => {
   }
 
   for (const tag of tags) {
-    await Tag.create({ id: tag._id, tag_category_id: tag.category, name: tag.name });
+    const createdTag = await Tag.create({ id: tag._id, name: tag.name });
+    await createdTag.setTagCategory(tag.category);
   }
 
   for (const maker of makers) {
@@ -55,7 +59,6 @@ connectToMysql(config.mysqlConnectionString).then(async sequelize => {
   for (const product of products) {
     const createdProduct = await Product.create({ id: product.id, ...product });
     
-    // Relationships
     for (const product_category_id of product.categories) {
       if (await ProductCategory.findByPk(product_category_id)) {
         await createdProduct.addProductCategory(product_category_id);

@@ -1,5 +1,6 @@
 
 const { DataSource } = require('apollo-datasource');
+const { Op } = require('sequelize');
 
 module.exports = class extends DataSource {
   
@@ -11,4 +12,5 @@ module.exports = class extends DataSource {
   initialize(config) {
     this.sequelize = config.context.sequelize;
   }
+
 }

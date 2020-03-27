@@ -52,25 +52,27 @@ module.exports = function(sequelize) {
     underscored: true
   });
 
-  const Tag = TagModel(sequelize);
+  Product.associate = function() {
+    const Tag = TagModel(sequelize);
+
+    Product.belongsToMany(Tag, { through: 'products_tags' });
+    Tag.belongsToMany(Product, { through: 'products_tags' });
+    
+    const ProductCategory = ProductCategoryModel(sequelize);
   
-  Product.belongsToMany(Tag, { through: 'products_tags' });
-  Tag.belongsToMany(Product, { through: 'products_tags' });
+    Product.belongsToMany(ProductCategory, { through: 'products_product_categories' });
+    ProductCategory.belongsToMany(Product, { through: 'products_product_categories' });
   
-  const ProductCategory = ProductCategoryModel(sequelize);
-
-  Product.belongsToMany(ProductCategory, { through: 'products_product_categories' });
-  ProductCategory.belongsToMany(Product, { through: 'products_product_categories' });
-
-  const Maker = MakerModel(sequelize);
-
-  Product.belongsToMany(Maker, { through: 'products_makers' });
-  Maker.belongsToMany(Product, { through: 'products_makers' });
-
-  const YoutubeVideo = YoutubeVideoModel(sequelize);
-
-  Product.belongsToMany(YoutubeVideo, { through: 'products_youtube_videos' });
-  YoutubeVideo.belongsToMany(Product, { through: 'products_youtube_videos' });
+    const Maker = MakerModel(sequelize);
+  
+    Product.belongsToMany(Maker, { through: 'products_makers' });
+    Maker.belongsToMany(Product, { through: 'products_makers' });
+  
+    const YoutubeVideo = YoutubeVideoModel(sequelize);
+  
+    Product.belongsToMany(YoutubeVideo, { through: 'products_youtube_videos' });
+    YoutubeVideo.belongsToMany(Product, { through: 'products_youtube_videos' });
+  }
   
   return Product;
 };

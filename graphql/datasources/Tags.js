@@ -3,12 +3,12 @@ const SequelizeDatasource = require('../../util/SequelizeDatasource');
 
 class TagsDatasource extends SequelizeDatasource {
   
-  async getTags() {
-    const tags = await this.model.findAll({ include: { all: true }, required: true });
-    return tags.map(this.tagReducer);
+  async findTags() {
+    const tags = await this.model.findAll();
+    return tags.map(this.reduce);
   }
 
-  tagReducer(tag) {
+  reduce(tag) {
     return {
       id: tag.get('id'),
       name: tag.get('name'),

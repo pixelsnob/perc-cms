@@ -17,13 +17,19 @@ const config = require('./config');
 
 connectToMysql(config.mysqlConnectionString).then(sequelize => {
 
+  const ProductModel = Product(sequelize);
+  ProductModel.associate();
+  
+  const ProductCategoryModel = ProductCategory(sequelize);
+  const TagModel = Tag(sequelize);
+
   const server = new ApolloServer({
     typeDefs,
     resolvers,
     dataSources: () => ({
-      Products: new ProductsDatasource(Product(sequelize)),
-      ProductCategories: new ProductCategoriesDatasource(ProductCategory(sequelize)),
-      Tags: new TagsDatasource(Tag(sequelize))
+      Products: new ProductsDatasource(ProductModel),
+      ProductCategories: new ProductCategoriesDatasource(ProductCategoryModel),
+      Tags: new TagsDatasource(TagModel)
       //Makers: new MakersDatasource(Maker(sequelize))
 
     }),

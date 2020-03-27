@@ -3,18 +3,17 @@ const SequelizeDatasource = require('../../util/SequelizeDatasource');
 
 class ProductCategories extends SequelizeDatasource {
   
-  async getProductCategories() {
+  async find() {
     const productCategories = await this.model.findAll({ include });
-    return productCategories.map(this.productCategoryReducer);
+    return productCategories.map(this.reduce);
   }
 
-  productCategoryReducer(productCategory) {
+  reduce(productCategory) {
     return {
       id: productCategory.get('id'),
       name: productCategory.get('name')
     };
   }
-
 }
 
 module.exports = ProductCategories;

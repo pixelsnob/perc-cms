@@ -2,26 +2,31 @@
 const resolvers = {
 
   Query: {
-    products: (
+    findProducts: (
       _,
-      __,
+      { offset, limit, order },
       { dataSources }
-    ) => dataSources.Products.getProducts(),
-    product: (
+    ) => dataSources.Products.findAll(offset, limit, order),
+    queryProducts: (
+      _,
+      { offset, limit, query, order },
+      { dataSources }
+    ) => dataSources.Products.query(query, offset, limit, order),
+    findProductById: (
       _,
       { id },
       { dataSources }
-    ) => dataSources.Products.getProduct(id),
-    productCategories: (
+    ) => dataSources.Products.findById(id),
+    findProductCategories: (
       _,
       __,
       { dataSources }
-    ) => dataSources.ProductCategories.getProductCategories(),
-    tags: (
+    ) => dataSources.ProductCategories.findProductCategories(),
+    findTags: (
       _,
       __,
       { dataSources }
-    ) => dataSources.Tags.getTags()
+    ) => dataSources.Tags.findTags()
   },
   
   Mutation: {
@@ -29,13 +34,30 @@ const resolvers = {
       _,
       data,
       { dataSources }
-    ) => dataSources.Products.addProduct(data),
+    ) => dataSources.Products.add(data),
+    updateProduct: (
+      _,
+      data,
+      { dataSources }
+    ) => dataSources.Products.update(data),
+    deleteProduct: (
+      _,
+      id,
+      { dataSources }
+    ) => dataSources.Products.remove(id),
     addTag: (
       _,
       data,
       { dataSources }
     ) => dataSources.Tags.addTag(data)
-  }
+  },
+
+  // MutationResponse: {
+  //   __resolveType(mutationResponse, context, info) {
+  //     return null;
+  //   },
+  // }
+
 };
 
 module.exports = resolvers;
