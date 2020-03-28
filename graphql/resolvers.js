@@ -17,16 +17,17 @@ const resolvers = {
       { id },
       { dataSources }
     ) => dataSources.Products.findById(id),
-    findProductCategories: (
+    findProductCategoryById: (
       _,
-      __,
+      { id },
       { dataSources }
-    ) => dataSources.ProductCategories.findProductCategories(),
-    findTags: (
+    ) => dataSources.ProductCategories.findById(id),
+    findTagById: (
       _,
-      __,
+      { id },
       { dataSources }
-    ) => dataSources.Tags.findTags()
+    ) => dataSources.Tags.findById(id),
+    
   },
   
   Mutation: {
@@ -45,11 +46,36 @@ const resolvers = {
       id,
       { dataSources }
     ) => dataSources.Products.remove(id),
+    addProductCategory: (
+      _,
+      data,
+      { dataSources }
+    ) => dataSources.ProductCategories.add(data),
+    updateProductCategory: (
+      _,
+      data,
+      { dataSources }
+    ) => dataSources.ProductCategories.update(data),
+    deleteProductCategory: (
+      _,
+      id,
+      { dataSources }
+    ) => dataSources.ProductCategories.remove(id),
     addTag: (
       _,
       data,
       { dataSources }
-    ) => dataSources.Tags.addTag(data)
+    ) => dataSources.Tags.add(data),
+    updateTag: (
+      _,
+      data,
+      { dataSources }
+    ) => dataSources.Tags.update(data),
+    deleteTag: (
+      _,
+      id,
+      { dataSources }
+    ) => dataSources.Tags.remove(id),
   },
 
   // MutationResponse: {

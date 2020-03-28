@@ -6,7 +6,7 @@ const typeDefs = require('./graphql/types');
 const resolvers = require('./graphql/resolvers');
 const connectToMysql = require('./util/connectToMysql');
 const ProductsDatasource = require('./graphql/datasources/Products');
-const ProductCategoriesDatasource = require('./graphql/datasources/Products');
+const ProductCategoriesDatasource = require('./graphql/datasources/ProductCategories');
 const TagsDatasource = require('./graphql/datasources/Tags');
 
 const Tag = require('./models/Tag');
@@ -40,10 +40,11 @@ connectToMysql(config.mysqlConnectionString).then(sequelize => {
     //   console.error(err);
     //   return err;
     // },
-    cacheControl: {
-      defaultMaxAge: 10,
-    },
-    plugins: [ responseCachePlugin() ]
+
+    // cacheControl: {
+    //   defaultMaxAge: 10,
+    // },
+    // plugins: [ responseCachePlugin() ]
   });
   
   const app = express();

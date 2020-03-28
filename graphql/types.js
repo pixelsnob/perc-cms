@@ -47,7 +47,7 @@ const typeDefs = gql`
   }
 
   input QueryProductsOrderInput {
-    columnName: String!
+    column: String!
     direction: String!
   }
 
@@ -55,33 +55,34 @@ const typeDefs = gql`
     findProductCategories: [ ProductCategory ]
     
     findProducts(
-      offset: Int,
+      offset: Int
       limit: Int
       order: QueryProductsOrderInput
     ): [ Product ]
     
-    findProductById(id: Int): Product 
+    findProductById(id: ID!): Product 
     
     queryProducts(
       offset: Int,
       limit: Int,
-      query: QueryProductsQueryInput
+      query: QueryProductsQueryInput!
       order: [ QueryProductsOrderInput ]
     ): [ Product ]
-    
-    findTags: [ Tag ]
-    
-    findMakers: [ Maker ]
+
+    findProductCategoryById(
+      id: ID!
+    ): ProductCategory
+  
+    findTagById(id: ID!): Tag 
+
   }
 
 
   type Mutation {
     
-    addTag(name: String): Tag
-    
     addProduct(
-      name: String,
-      tags: [ ID! ]
+      name: String
+      tags: [ Int! ]
       makers: [ ID! ]
       productCategories: [ ID! ]
       youtubeVideos: [ ID! ]
@@ -89,7 +90,7 @@ const typeDefs = gql`
 
     updateProduct(
       id: ID!
-      name: String,
+      name: String
       tags: [ ID! ]
       makers: [ ID! ]
       productCategories: [ ID! ]
@@ -103,6 +104,36 @@ const typeDefs = gql`
     deleteProduct(
       id: ID!
     ): Product
+
+
+    addProductCategory(
+      name: String
+    ): ProductCategory
+
+    updateProductCategory(
+      id: ID!
+      name: String
+    ): ProductCategory
+    
+    deleteProductCategory(
+      id: ID!
+    ): ProductCategory
+    
+
+    addTag(
+      name: String,
+      tagCategory: ID!
+    ): Tag
+
+    updateTag(
+      id: ID!
+      name: String
+      tagCategory: ID!
+    ): Tag
+    
+    deleteTag(
+      id: ID!
+    ): Tag
   }
 
 

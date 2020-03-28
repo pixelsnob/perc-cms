@@ -3,9 +3,12 @@ const SequelizeDatasource = require('../../util/SequelizeDatasource');
 
 class TagsDatasource extends SequelizeDatasource {
   
-  async findTags() {
-    const tags = await this.model.findAll();
-    return tags.map(this.reduce);
+  async onAddBeforeCommit(data, createdTag, transaction, lock) {
+    await createdTag.setTagCategory(data.tagCategory, { transaction, lock });
+  }
+
+  async onUpdateBeforeCommit(data, updatedProduct, transaction, lock) {
+    await updatedProduct.setTagCategory(data.tagCategory, { transaction, lock });
   }
 
   reduce(tag) {
