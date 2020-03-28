@@ -23,7 +23,7 @@ module.exports = class extends DataSource {
       include: ASSOCIATIONS_INCLUDE_ALL_NESTED,
       offset,
       limit,
-      order
+      order: order.map(o => [ o.column, o.direction ])
     });
     
     return items.map(this.reduce);
@@ -134,7 +134,7 @@ module.exports = class extends DataSource {
       transaction.commit();
 
       if (!res) {
-        throw new Error(`Error removing ${this.model.name}`);
+        throw new Error(`${this.model.name} was not removed!`);
       }
 
     } catch (e) {

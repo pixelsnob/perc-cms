@@ -3,14 +3,12 @@ const SequelizeDatasource = require('../../util/SequelizeDatasource');
 
 class ProductCategoriesDatasource extends SequelizeDatasource {
 
-  reduce(item) {
+  reduce(productCategory) {
     return {
-      id: item.get('id'),
-      name: item.get('name')
+      id: productCategory.get('id'),
+      name: productCategory.get('name')
     };
   }
 }
 
 module.exports = ProductCategoriesDatasource;
-
-

@@ -86,7 +86,8 @@ class ProductsDatasource extends SequelizeDatasource {
         name: tag.name,
         tagCategory: tag.TagCategory
       })),
-      youtubeVideos: product.get('YoutubeVideos')
+      youtubeVideos: product.get('YoutubeVideos'),
+      price: product.get('price')
     };
   }
 

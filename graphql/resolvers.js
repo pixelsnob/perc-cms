@@ -7,6 +7,11 @@ const resolvers = {
       { offset, limit, order },
       { dataSources }
     ) => dataSources.Products.findAll(offset, limit, order),
+    findMakers: (
+      _,
+      { offset, limit, order },
+      { dataSources }
+    ) => dataSources.Makers.findAll(offset, limit, order),
     queryProducts: (
       _,
       { offset, limit, query, order },
@@ -27,7 +32,11 @@ const resolvers = {
       { id },
       { dataSources }
     ) => dataSources.Tags.findById(id),
-    
+    findMakerById: (
+      _,
+      { id },
+      { dataSources }
+    ) => dataSources.Makers.findById(id),
   },
   
   Mutation: {
@@ -76,6 +85,21 @@ const resolvers = {
       id,
       { dataSources }
     ) => dataSources.Tags.remove(id),
+    addMaker: (
+      _,
+      data,
+      { dataSources }
+    ) => dataSources.Makers.add(data),
+    updateMaker: (
+      _,
+      data,
+      { dataSources }
+    ) => dataSources.Makers.update(data),
+    deleteMaker: (
+      _,
+      id,
+      { dataSources }
+    ) => dataSources.Makers.remove(id),
   },
 
   // MutationResponse: {

@@ -36,6 +36,7 @@ const typeDefs = gql`
     makers: [ Maker ]
     tags: [ Tag ]
     youtubeVideos: [ YoutubeVideo ]
+    price: String
   }
 
   input QueryProductsQueryInput {
@@ -57,14 +58,14 @@ const typeDefs = gql`
     findProducts(
       offset: Int
       limit: Int
-      order: QueryProductsOrderInput
+      order: [ QueryProductsOrderInput ]
     ): [ Product ]
     
     findProductById(id: ID!): Product 
     
     queryProducts(
-      offset: Int,
-      limit: Int,
+      offset: Int
+      limit: Int
       query: QueryProductsQueryInput!
       order: [ QueryProductsOrderInput ]
     ): [ Product ]
@@ -75,6 +76,13 @@ const typeDefs = gql`
   
     findTagById(id: ID!): Tag 
 
+    findMakerById(id: ID!): Maker 
+
+    findMakers(
+      offset: Int
+      limit: Int
+      order: [ QueryProductsOrderInput ]
+    ): [ Maker ]
   }
 
 
@@ -105,7 +113,6 @@ const typeDefs = gql`
       id: ID!
     ): Product
 
-
     addProductCategory(
       name: String
     ): ProductCategory
@@ -119,7 +126,6 @@ const typeDefs = gql`
       id: ID!
     ): ProductCategory
     
-
     addTag(
       name: String,
       tagCategory: ID!
@@ -134,6 +140,19 @@ const typeDefs = gql`
     deleteTag(
       id: ID!
     ): Tag
+
+    addMaker(
+      name: String
+    ): Maker
+
+    updateMaker(
+      id: ID!
+      name: String
+    ): Maker
+    
+    deleteMaker(
+      id: ID!
+    ): Maker
   }
 
 

@@ -8,10 +8,14 @@ const connectToMysql = require('./util/connectToMysql');
 const ProductsDatasource = require('./graphql/datasources/Products');
 const ProductCategoriesDatasource = require('./graphql/datasources/ProductCategories');
 const TagsDatasource = require('./graphql/datasources/Tags');
+const MakersDatasource = require('./graphql/datasources/Makers');
+const YoutubeVideosDatasource = require('./graphql/datasources/YoutubeVideos');
 
 const Tag = require('./models/Tag');
 const Product = require('./models/Product');
 const ProductCategory = require('./models/ProductCategory');
+const Maker = require('./models/Maker');
+const YoutubeVideo = require('./models/YoutubeVideo');
 
 const config = require('./config');
 
@@ -22,6 +26,7 @@ connectToMysql(config.mysqlConnectionString).then(sequelize => {
   
   const ProductCategoryModel = ProductCategory(sequelize);
   const TagModel = Tag(sequelize);
+  const MakerModel = Maker(sequelize);
 
   const server = new ApolloServer({
     typeDefs,
@@ -29,9 +34,9 @@ connectToMysql(config.mysqlConnectionString).then(sequelize => {
     dataSources: () => ({
       Products: new ProductsDatasource(ProductModel),
       ProductCategories: new ProductCategoriesDatasource(ProductCategoryModel),
-      Tags: new TagsDatasource(TagModel)
-      //Makers: new MakersDatasource(Maker(sequelize))
-
+      Tags: new TagsDatasource(TagModel),
+      Makers: new MakersDatasource(MakerModel),
+      YoutubeVideos: new YoutubeVideosDatasource(YoutubeVideo)
     }),
     context: async () => {
       return { sequelize };

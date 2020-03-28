@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev-staging": "NODE_ENV=development nodemon server.js --watch"
+    "dev-staging": "NODE_ENV=development nodemon server.js --watch .  --signal SIGHUP"
   },
   "dependencies": {
     "@apollo/react-hooks": "^3.1.3",
