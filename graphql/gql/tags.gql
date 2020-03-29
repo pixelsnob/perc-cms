@@ -1,0 +1,51 @@
+query findTagById {
+  findTagById(id: 30) {
+    name
+    id
+    tagCategory {
+      name
+      id
+    }
+  }
+}
+
+query findTags {
+  findTags {
+    name
+    id
+    tagCategory {
+      name
+      id
+    }
+  }
+}
+
+mutation addTag {
+  addTag(name: "XXXXXX", tagCategory: 2) {
+    name
+    id
+    tagCategory {
+      name
+    }
+  }
+}
+
+mutation updateTag {
+  updateTag(id: 30, name:"f", tagCategory:4) {
+    name
+    id
+    tagCategory {
+      name
+    }
+  }
+}
+
+mutation deleteTag {
+  deleteTag(id: 30) {
+    id
+    name
+    tagCategory {
+      name
+    }
+  }
+}

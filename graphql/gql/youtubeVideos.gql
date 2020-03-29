@@ -1,0 +1,44 @@
+query findYoutubeVideoById {
+  findYoutubeVideoById(id: 117) {
+    description
+    id
+  }
+}
+
+query findYoutubeVideos {
+  findYoutubeVideos(order: [{ column: "youtube_id", direction: "asc" }]) {
+    description
+    id
+    youtube_id
+  }
+}
+
+mutation addYoutubeVideo {
+  addYoutubeVideo(
+    description: "F-UUUUUUUUUUUUUUUUU uUUU"
+    youtube_id: "000000"
+  ) {
+    description
+    id
+    youtube_id
+  }
+}
+
+mutation updateYoutubeVideo {
+  updateYoutubeVideo(
+    id: 116
+    description: "WWWWWWWWW"
+    youtube_id: "WWWwwwww"
+  ) {
+    description
+    id
+    youtube_id
+  }
+}
+
+mutation deleteYoutubeVideo {
+  deleteYoutubeVideo(id: 65) {
+    id
+    description
+  }
+}

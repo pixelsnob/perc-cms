@@ -1,0 +1,33 @@
+query findProductCategoryById {
+  findProductCategoryById(id: 4772) {
+    name
+    id
+  }
+}
+
+query findProductCategories {
+  findProductCategories {
+    name
+    id
+  }
+}
+
+mutation addProductCategory {
+  addProductCategory(name: "XXXXXX") {
+    name
+    id
+  }
+}
+
+mutation updateProductCategory {
+  updateProductCategory(id: 4772, name:"vvvvvvvvvvvv") {
+    name
+    id
+  }
+}
+
+mutation deleteProductCategory {
+  deleteProductCategory(id: 4772) {
+    id
+  }
+}

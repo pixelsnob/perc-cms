@@ -1,0 +1,34 @@
+query findTagCategoryById {
+  findTagCategoryById(id: 1) {
+    name
+    id
+  }
+}
+
+query findTagCategories {
+  findTagCategories(order: [{ column: "name", direction: "desc" }]) {
+    name
+    id
+  }
+}
+
+mutation addTagCategory {
+  addTagCategory(name: "XXXXXX", tagCategory:1) {
+    name
+    id
+  }
+}
+
+mutation updateTagCategory {
+  updateTagCategory(id: 5, name: "qqqqqqqq", tagCategory:3) {
+    name
+    id
+  }
+}
+
+mutation deleteTagCategory {
+  deleteTagCategory(id: 5) {
+    id
+    name
+  }
+}

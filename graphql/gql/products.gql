@@ -1,0 +1,139 @@
+mutation updateProduct {
+  updateProduct(
+    id: "604"
+    name: "ehey there"
+    tags: [1]
+    productCategories: []
+    makers: [1261]
+    youtubeVideos: [1,3]
+  ) {
+    name
+    id
+    tags {
+      name
+      tagCategory {
+        name
+      }
+    }
+    productCategories {
+      name
+    }
+    youtubeVideos {
+      description
+    }
+    makers {
+      name
+    }
+  }
+}
+
+mutation deleteProduct {
+  deleteProduct(id: 604) {
+    id
+  }
+}
+
+mutation addProduct {
+  addProduct(
+    name: "XXXXXX"
+    tags: [4, 5, 1]
+    productCategories: []
+    makers: [1202, 1222]
+    youtubeVideos: [1]
+  ) {
+    name
+    id
+    tags {
+      name
+      id
+      tagCategory {
+        name
+      }
+    }
+    productCategories {
+      name
+    }
+    youtubeVideos {
+      description
+    }
+  }
+}
+
+query findProductById {
+  findProductById(id: "601") {
+    name
+    id
+    productCategories {
+      name
+      id
+    }
+    makers {
+      name
+      id
+    }
+    tags {
+      name
+      id
+      tagCategory {
+        name
+      }
+    }
+    youtubeVideos {
+      description
+    }
+  }
+}
+
+query queryProducts {
+  queryProducts(
+    query: { productCategories: [4777], tags: [], makers: [1192] }
+    order: [{ column: "name", direction: "desc" }]
+  ) {
+    name
+    id
+    productCategories {
+      name
+      id
+    }
+    makers {
+      name
+      id
+    }
+    tags {
+      name
+      id
+      # tagCategory {
+      #   name
+      # }
+    }
+    youtubeVideos {
+      description
+    }
+  }
+}
+
+query findProducts {
+  findProducts(offset:1, limit:50, order:[{column:"name",direction:"asc"}]) {
+    name
+    id
+    price
+    productCategories {
+      name
+      id
+    }
+    makers {
+      name
+      id
+    }
+    tags {
+      name
+      id
+      tagCategory {
+        name
+      }
+    }
+    youtubeVideos {
+      description
+    }
+  }
+}

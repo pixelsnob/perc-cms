@@ -1,0 +1,34 @@
+query findMakerById {
+  findMakerById(id: 1263) {
+    name
+    id
+  }
+}
+
+query findMakers {
+  findMakers(order: [{ column: "name", direction: "desc" }]) {
+    name
+    id
+  }
+}
+
+mutation addMaker {
+  addMaker(name: "XXXXXX") {
+    name
+    id
+  }
+}
+
+mutation updateMaker {
+  updateMaker(id: 1247, name: "Zzzzzzz") {
+    name
+    id
+  }
+}
+
+mutation deleteMaker {
+  deleteMaker(id: 1296) {
+    id
+    name
+  }
+}

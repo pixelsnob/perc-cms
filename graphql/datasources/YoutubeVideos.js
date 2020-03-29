@@ -6,7 +6,8 @@ class YoutubeVideosDatasource extends SequelizeDatasource {
   reduce(youtubeVideo) {
     return {
       id: youtubeVideo.get('id'),
-      name: youtubeVideo.get('name')
+      description: youtubeVideo.get('description'),
+      youtube_id: youtubeVideo.get('youtube_id')
     };
   }
 }

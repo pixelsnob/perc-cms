@@ -25,8 +25,7 @@ module.exports = function(sequelize) {
     },
     description: {
       type: Sequelize.TEXT,
-      allowNull: false,
-      defaultValue: ''
+      allowNull: false
     },
   }, {
     underscored: true

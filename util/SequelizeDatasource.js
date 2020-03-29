@@ -1,14 +1,12 @@
+const { DataSource } = require("apollo-datasource");
 
-const { DataSource } = require('apollo-datasource');
-
-const ASSOCIATIONS_INCLUDE_ALL_NESTED = {      
+const ASSOCIATIONS_INCLUDE_ALL_NESTED = {
   all: true,
   nested: true,
   required: false
 };
 
 module.exports = class extends DataSource {
-  
   constructor(model) {
     super();
     this.model = model;
@@ -18,14 +16,14 @@ module.exports = class extends DataSource {
     this.sequelize = config.context.sequelize;
   }
 
-  async findAll(offset, limit, order) {
+  async findAll(offset, limit, order = []) {
     const items = await this.model.findAll({
       include: ASSOCIATIONS_INCLUDE_ALL_NESTED,
       offset,
       limit,
-      order: order.map(o => [ o.column, o.direction ])
+      order: order.map(o => [o.column, o.direction])
     });
-    
+
     return items.map(this.reduce);
   }
 
@@ -37,11 +35,11 @@ module.exports = class extends DataSource {
     if (!item) {
       throw new Error(`${this.model.name} not found!`);
     }
-    
+
     return this.reduce(item);
   }
 
-  async add(data) { ////create
+  async add(data) {
     const transaction = await this.sequelize.transaction();
     let createdItem = null;
 
@@ -51,19 +49,26 @@ module.exports = class extends DataSource {
         transaction,
         lock: transaction.LOCK.UPDATE
       });
-  
-      if (typeof this.onAddBeforeCommit == 'function') {
-        await this.onAddBeforeCommit(data, createdItem, transaction, transaction.LOCK.UPDATE);
-        await createdItem.reload({ transaction, lock: transaction.LOCK.UPDATE });
+
+      if (typeof this.onAddBeforeCommit == "function") {
+        await this.onAddBeforeCommit(
+          data,
+          createdItem,
+          transaction,
+          transaction.LOCK.UPDATE
+        );
+        await createdItem.reload({
+          transaction,
+          lock: transaction.LOCK.UPDATE
+        });
       }
-      
+
       await transaction.commit();
-      
     } catch (e) {
       await transaction.rollback();
       throw e;
     }
-    
+
     return this.reduce(createdItem);
   }
 
@@ -76,7 +81,7 @@ module.exports = class extends DataSource {
         transaction,
         lock: transaction.LOCK.UPDATE
       });
-      
+
       if (!item) {
         throw new Error(`${this.model.name} not found!`);
       }
@@ -89,13 +94,20 @@ module.exports = class extends DataSource {
         lock: transaction.LOCK.UPDATE
       });
 
-      if (typeof this.onUpdateBeforeCommit == 'function') {
-        await this.onUpdateBeforeCommit(data, updatedItem, transaction, transaction.LOCK.UPDATE);
-        await updatedItem.reload({ transaction, lock: transaction.LOCK.UPDATE });
+      if (typeof this.onUpdateBeforeCommit == "function") {
+        await this.onUpdateBeforeCommit(
+          data,
+          updatedItem,
+          transaction,
+          transaction.LOCK.UPDATE
+        );
+        await updatedItem.reload({
+          transaction,
+          lock: transaction.LOCK.UPDATE
+        });
       }
-      
+
       await transaction.commit();
-      
     } catch (e) {
       await transaction.rollback();
       throw e;
@@ -117,7 +129,7 @@ module.exports = class extends DataSource {
       if (!item) {
         throw new Error(`${this.model.name} not found!`);
       }
-  
+
       const res = await this.model.destroy({
         where: {
           id: data.id
@@ -126,8 +138,13 @@ module.exports = class extends DataSource {
         lock: transaction.LOCK.UPDATE
       });
 
-      if (typeof this.onRemoveBeforeCommit == 'function') {
-        await this.onRemoveBeforeCommit(data, updatedItem, transaction, transaction.LOCK.UPDATE);
+      if (typeof this.onRemoveBeforeCommit == "function") {
+        await this.onRemoveBeforeCommit(
+          data,
+          updatedItem,
+          transaction,
+          transaction.LOCK.UPDATE
+        );
         await item.reload({ transaction, lock: transaction.LOCK.UPDATE });
       }
 
@@ -136,7 +153,6 @@ module.exports = class extends DataSource {
       if (!res) {
         throw new Error(`${this.model.name} was not removed!`);
       }
-
     } catch (e) {
       transaction.rollback();
       throw e;
@@ -148,4 +164,4 @@ module.exports = class extends DataSource {
   // reduce(item) {
   //   return item;
   // }
-}
+};
