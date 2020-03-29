@@ -103,8 +103,6 @@ const typeDefs = gql`
     ): YoutubeVideo
 
   }
-
-
 `;
 
 module.exports = typeDefs;
