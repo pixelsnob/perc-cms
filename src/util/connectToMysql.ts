@@ -1,9 +1,9 @@
 
-const Sequelize = require('sequelize');
+import { Sequelize } from 'sequelize';
 
-let connection;
+let connection: any;
 
-module.exports = function(connectionString) {
+module.exports = function(connectionString: string) {
   return new Promise(async function(resolve, reject) {
     if (connection) {
       resolve(connection);

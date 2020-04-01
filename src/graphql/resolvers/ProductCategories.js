@@ -22,12 +22,12 @@ module.exports = {
     ) => dataSources.ProductCategories.add(data),
     updateProductCategory: (
       _,
-      data,
+      { id, data },
       { dataSources }
-    ) => dataSources.ProductCategories.update(data),
+    ) => dataSources.ProductCategories.update(id, data),
     deleteProductCategory: (
       _,
-      id,
+      { id },
       { dataSources }
     ) => dataSources.ProductCategories.remove(id),
     

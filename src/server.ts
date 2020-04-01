@@ -1,3 +1,4 @@
+import { Sequelize } from "sequelize/types";
 
 const express = require('express');
 const { ApolloServer } = require('apollo-server-express');
@@ -23,22 +24,27 @@ const TagCategoriesDatasource = require('./graphql/datasources/TagCategories');
 const MakersDatasource = require('./graphql/datasources/Makers');
 const YoutubeVideosDatasource = require('./graphql/datasources/YoutubeVideos');
 
-const Tag = require('./models/Tag');
-const TagCategory = require('./models/TagCategory');
-const Product = require('./models/Product');
-const ProductCategory = require('./models/ProductCategory');
-const Maker = require('./models/Maker');
-const YoutubeVideo = require('./models/YoutubeVideo');
+import Tag from './models/Tag';
+import TagCategory from './models/TagCategory';
+import Product from './models/Product';
+import ProductCategory from './models/ProductCategory';
+import Maker from './models/Maker';
+import YoutubeVideo from './models/YoutubeVideo';
 
 const config = require('./config');
 
-connectToMysql(config.mysqlConnectionString).then((sequelize: any) => {
+connectToMysql(config.mysqlConnectionString).then((sequelize: Sequelize) => {////////
+
+  //const productRepository = sequelize.getRepository(Product);
 
   const ProductModel = Product(sequelize);
   ProductModel.associate();
-  
+  //ProductModel.find({});
+
   const ProductCategoryModel = ProductCategory(sequelize);
   const TagModel = Tag(sequelize);
+  TagModel.associate();
+  
   const MakerModel = Maker(sequelize);
   const YoutubeVideoModel = YoutubeVideo(sequelize);
   const TagCategoryModel = TagCategory(sequelize);
@@ -87,7 +93,5 @@ connectToMysql(config.mysqlConnectionString).then((sequelize: any) => {
     console.log(`Server ready at http://localhost:4000${server.graphqlPath}`)
   );
 
-}).catch((e: any) => console.error(e));
-
-
+}).catch((e: typeof Error) => console.error(e));
 

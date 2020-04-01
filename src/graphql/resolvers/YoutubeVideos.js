@@ -22,12 +22,12 @@ module.exports = {
     ) => dataSources.YoutubeVideos.add(data),
     updateYoutubeVideo: (
       _,
-      data,
+      { id, data },
       { dataSources }
-    ) => dataSources.YoutubeVideos.update(data),
+    ) => dataSources.YoutubeVideos.update(id, data),
     deleteYoutubeVideo: (
       _,
-      id,
+      { id },
       { dataSources }
     ) => dataSources.YoutubeVideos.remove(id),
     

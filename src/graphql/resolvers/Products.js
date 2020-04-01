@@ -27,12 +27,12 @@ module.exports = {
     ) => dataSources.Products.add(data),
     updateProduct: (
       _,
-      data,
+      { id, data },
       { dataSources }
-    ) => dataSources.Products.update(data),
+    ) => dataSources.Products.update(id, data),
     deleteProduct: (
       _,
-      id,
+      { id },
       { dataSources }
     ) => dataSources.Products.remove(id),
     

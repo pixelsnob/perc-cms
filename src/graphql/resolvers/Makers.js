@@ -22,12 +22,12 @@ module.exports = {
     ) => dataSources.Makers.add(data),
     updateMaker: (
       _,
-      data,
+      { id, data },
       { dataSources }
-    ) => dataSources.Makers.update(data),
+    ) => dataSources.Makers.update(id, data),
     deleteMaker: (
       _,
-      id,
+      { id },
       { dataSources }
     ) => dataSources.Makers.remove(id),
     

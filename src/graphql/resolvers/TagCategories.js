@@ -22,14 +22,14 @@ module.exports = {
     ) => dataSources.TagCategories.add(data),
     updateTagCategory: (
       _,
-      data,
+      { id, data },
       { dataSources }
-    ) => dataSources.TagCategories.update(data),
+    ) => dataSources.TagCategories.update(id, data),
     deleteTagCategory: (
       _,
-      id,
+      { id },
       { dataSources }
-    ) => dataSources.TagCategories.remove(id),
+    ) => dataSources.TagCategories.remove(id)
     
   }
 

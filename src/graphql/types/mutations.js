@@ -3,6 +3,36 @@ const { gql } = require('apollo-server-express');
 
 const typeDefs = gql`
 
+  input UpdateProductData {
+    name: String
+    tags: [ ID! ]
+    makers: [ ID! ]
+    productCategories: [ ID! ]
+    youtubeVideos: [ ID! ]
+  }
+
+  input UpdateProductCategoryData {
+    name: String
+  }
+  
+  input UpdateMakerData {
+    name: String
+  }
+
+  input UpdateTagData {
+    name: String
+    tagCategory: ID!
+  }
+
+  input UpdateTagCategoryData {
+    name: String
+  }
+
+  input UpdateYoutubeVideoData {
+    description: String!
+    youtube_id: String!
+  }
+
   type Mutation {
     
     addProduct(
@@ -15,11 +45,7 @@ const typeDefs = gql`
 
     updateProduct(
       id: ID!
-      name: String
-      tags: [ ID! ]
-      makers: [ ID! ]
-      productCategories: [ ID! ]
-      youtubeVideos: [ ID! ]
+      data: UpdateProductData
     ): Product
     
     deleteProduct(
@@ -33,7 +59,7 @@ const typeDefs = gql`
 
     updateProductCategory(
       id: ID!
-      name: String
+      data: UpdateProductCategoryData
     ): ProductCategory
     
     deleteProductCategory(
@@ -48,8 +74,7 @@ const typeDefs = gql`
 
     updateTag(
       id: ID!
-      name: String
-      tagCategory: ID!
+      data: UpdateTagData!
     ): Tag
     
     deleteTag(
@@ -64,8 +89,9 @@ const typeDefs = gql`
 
     updateTagCategory(
       id: ID!
-      name: String
-      tagCategory: ID!
+      data: UpdateTagCategoryData!
+      # name: String
+      # tagCategory: ID!
     ): TagCategory
     
     deleteTagCategory(
@@ -79,7 +105,7 @@ const typeDefs = gql`
 
     updateMaker(
       id: ID!
-      name: String
+      data: UpdateMakerData!
     ): Maker
     
     deleteMaker(
@@ -94,8 +120,7 @@ const typeDefs = gql`
 
     updateYoutubeVideo(
       id: ID!
-      description: String!
-      youtube_id: String!
+      data: UpdateYoutubeVideoData!
     ): YoutubeVideo
     
     deleteYoutubeVideo(

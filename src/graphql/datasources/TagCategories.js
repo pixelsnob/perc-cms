@@ -1,5 +1,5 @@
 
-const SequelizeDatasource = require('../../util/SequelizeDatasource'); 
+import SequelizeDatasource from '../../util/SequelizeDatasource'; 
 
 class TagCategoriesDatasource extends SequelizeDatasource {
 

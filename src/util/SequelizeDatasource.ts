@@ -1,4 +1,10 @@
-const { DataSource } = require("apollo-datasource");
+import { Model, Sequelize } from "sequelize";
+import { DataSource, DataSourceConfig } from 'apollo-datasource';
+import { Transaction, LOCK } from 'sequelize/types';
+
+type NonAbstract<T> = { [P in keyof T]: T[P] }; // "abstract" gets lost here
+type Constructor<T> = (new () => T);
+type NonAbstractTypeOfModel<T> = Constructor<T> & NonAbstract<typeof Model>;
 
 const ASSOCIATIONS_INCLUDE_ALL_NESTED = {
   all: true,
@@ -6,19 +12,26 @@ const ASSOCIATIONS_INCLUDE_ALL_NESTED = {
   required: false
 };
 
-module.exports = class extends DataSource {
-  constructor(model) {
+class SequelizeDatasource extends DataSource<NonAbstractTypeOfModel<Model>> {
+
+  protected model: NonAbstractTypeOfModel<Model>;
+  protected sequelize: Sequelize;
+
+  public async onAddBeforeCommit(data: any, createdProduct: any, transaction: Transaction, lock: LOCK) {}
+  public async onUpdateBeforeCommit(data: any, createdProduct: any, transaction: Transaction, lock: LOCK) {}
+
+  constructor(model: NonAbstractTypeOfModel<Model>) {
     super();
     this.model = model;
   }
 
-  initialize(config) {
+  initialize(config: DataSourceConfig<NonAbstractTypeOfModel<Model>>) {
     this.sequelize = config.context.sequelize;
   }
 
-  async findAll(offset, limit, order = []) {
+  async findAll(offset: number, limit: number, order: [{ column: string, direction: string }?] = []) {
     const items = await this.model.findAll({
-      include: ASSOCIATIONS_INCLUDE_ALL_NESTED,
+      include: [ ASSOCIATIONS_INCLUDE_ALL_NESTED ],
       offset,
       limit,
       order: order.map(o => [o.column, o.direction])
@@ -27,9 +40,13 @@ module.exports = class extends DataSource {
     return items.map(this.reduce);
   }
 
-  async findById(id) {
+  reduce(item: Model) {
+    throw new Error("Method not implemented.");
+  }
+
+  async findById(id: number) {
     const item = await this.model.findByPk(id, {
-      include: ASSOCIATIONS_INCLUDE_ALL_NESTED
+      include: [ ASSOCIATIONS_INCLUDE_ALL_NESTED ]
     });
 
     if (!item) {
@@ -39,15 +56,15 @@ module.exports = class extends DataSource {
     return this.reduce(item);
   }
 
-  async add(data) {
+  async add(data: Model) {
     const transaction = await this.sequelize.transaction();
     let createdItem = null;
 
     try {
       createdItem = await this.model.create(data, {
-        include: ASSOCIATIONS_INCLUDE_ALL_NESTED,
-        transaction,
-        lock: transaction.LOCK.UPDATE
+        include: [ ASSOCIATIONS_INCLUDE_ALL_NESTED ],
+        transaction
+        //lock: transaction.LOCK.UPDATE
       });
 
       if (typeof this.onAddBeforeCommit == "function") {
@@ -72,12 +89,12 @@ module.exports = class extends DataSource {
     return this.reduce(createdItem);
   }
 
-  async update(data) {
+  async update(id: number, data: Model) {
     const transaction = await this.sequelize.transaction();
     let updatedItem = null;
     try {
-      const item = await this.model.findByPk(data.id, {
-        include: ASSOCIATIONS_INCLUDE_ALL_NESTED,
+      const item = await this.model.findByPk(id, {
+        include: [ ASSOCIATIONS_INCLUDE_ALL_NESTED ],
         transaction,
         lock: transaction.LOCK.UPDATE
       });
@@ -88,10 +105,10 @@ module.exports = class extends DataSource {
 
       updatedItem = await item.update(data, {
         where: {
-          id: data.id
+          id
         },
-        transaction,
-        lock: transaction.LOCK.UPDATE
+        transaction
+        //lock: transaction.LOCK.UPDATE
       });
 
       if (typeof this.onUpdateBeforeCommit == "function") {
@@ -116,13 +133,13 @@ module.exports = class extends DataSource {
     return this.reduce(updatedItem);
   }
 
-  async remove(data) {
+  async remove(id: number) {
     const transaction = await this.sequelize.transaction();
     let item = null;
 
     try {
-      item = await this.model.findByPk(data.id, {
-        include: ASSOCIATIONS_INCLUDE_ALL_NESTED,
+      item = await this.model.findByPk(id, {
+        include: [ ASSOCIATIONS_INCLUDE_ALL_NESTED ],
         transaction,
         lock: transaction.LOCK.UPDATE
       });
@@ -132,21 +149,21 @@ module.exports = class extends DataSource {
 
       const res = await this.model.destroy({
         where: {
-          id: data.id
+          id: id
         },
-        transaction,
-        lock: transaction.LOCK.UPDATE
+        transaction
+        //lock: transaction.LOCK.UPDATE
       });
 
-      if (typeof this.onRemoveBeforeCommit == "function") {
-        await this.onRemoveBeforeCommit(
-          data,
-          updatedItem,
-          transaction,
-          transaction.LOCK.UPDATE
-        );
-        await item.reload({ transaction, lock: transaction.LOCK.UPDATE });
-      }
+      // if (typeof this.onRemoveBeforeCommit == 'function') {
+      //   await this.onRemoveBeforeCommit(
+      //     data,
+      //     item,
+      //     transaction,
+      //     transaction.LOCK.UPDATE
+      //   );
+      //   await item.reload({ transaction, lock: transaction.LOCK.UPDATE });
+      // }
 
       transaction.commit();
 
@@ -161,7 +178,6 @@ module.exports = class extends DataSource {
     return this.reduce(item);
   }
 
-  // reduce(item) {
-  //   return item;
-  // }
 };
+
+export default SequelizeDatasource;
