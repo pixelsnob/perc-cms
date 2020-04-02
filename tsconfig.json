@@ -8,8 +8,8 @@
     "allowJs": true,
     "moduleResolution": "node",
     "allowSyntheticDefaultImports": true,
-    "experimentalDecorators": true,
-    "emitDecoratorMetadata": true,
+    //"experimentalDecorators": true,
+    //"emitDecoratorMetadata": true,
     
   },
   "include": [

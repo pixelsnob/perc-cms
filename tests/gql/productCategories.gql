@@ -1,5 +1,5 @@
 query findProductCategoryById {
-  findProductCategoryById(id: 4772) {
+  findProductCategoryById(id: 4776) {
     name
     id
   }
@@ -20,14 +20,14 @@ mutation addProductCategory {
 }
 
 mutation updateProductCategory {
-  updateProductCategory(id: 4772, name:"vvvvvvvvvvvv") {
+  updateProductCategory(id: 4775, data: { name: "vvvvvvvvvvvv" }) {
     name
     id
   }
 }
 
 mutation deleteProductCategory {
-  deleteProductCategory(id: 4772) {
+  deleteProductCategory(id: 4775) {
     id
   }
 }

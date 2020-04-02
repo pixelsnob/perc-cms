@@ -26,9 +26,12 @@ mutation addYoutubeVideo {
 
 mutation updateYoutubeVideo {
   updateYoutubeVideo(
-    id: 116
-    description: "WWWWWWWWW"
-    youtube_id: "WWWwwwww"
+    id: 117
+    data: {
+      description: "WWWWWWWWW"
+    	youtube_id: "WWWwwwww"
+    }
+    
   ) {
     description
     id
@@ -37,7 +40,7 @@ mutation updateYoutubeVideo {
 }
 
 mutation deleteYoutubeVideo {
-  deleteYoutubeVideo(id: 65) {
+  deleteYoutubeVideo(id: 117) {
     id
     description
   }

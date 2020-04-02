@@ -1,17 +1,19 @@
+import { Sequelize } from "sequelize/types";
 
 const connectToMysql = require('./connectToMysql');
 const connectToMongo = require('./connectToMongo');
 
-const config = require('../config');
-const ProductModel = require('../models/Product');
-const ProductCategoryModel = require('../models/ProductCategory');
-const TagCategoryModel = require('../models/TagCategory');
+const config =require ('../config');
 
-const TagModel = require('../models/Tag');
-const MakerModel = require('../models/Maker');
-const YoutubeVideoModel = require('../models/YoutubeVideo');
+import ProductModel, { Product } from '../models/Product';
+import ProductCategoryModel from '../models/ProductCategory';
+import TagCategoryModel from '../models/TagCategory';
 
-connectToMysql(config.mysqlConnectionString).then(async sequelize => {
+import TagModel from '../models/Tag';
+import MakerModel from '../models/Maker';
+import YoutubeVideoModel from '../models/YoutubeVideo';
+
+connectToMysql(config.mysqlConnectionString).then(async (sequelize: Sequelize) => {
 
   const mongoClient = await connectToMongo(config.mongoDbConnectionString);
   const mongoDb = mongoClient.db(config.mongoDbName);
@@ -28,7 +30,10 @@ connectToMysql(config.mysqlConnectionString).then(async sequelize => {
 
   const ProductCategory = ProductCategoryModel(sequelize);
   const TagCategory = TagCategoryModel(sequelize);
+  
   const Tag = TagModel(sequelize);
+  Tag.associate();
+
   const Maker = MakerModel(sequelize);
   const YoutubeVideo = YoutubeVideoModel(sequelize);
 
@@ -44,7 +49,7 @@ connectToMysql(config.mysqlConnectionString).then(async sequelize => {
   }
 
   for (const tag of tags) {
-    const createdTag = await Tag.create({ id: tag._id, name: tag.name });
+    const createdTag: any = await Tag.create({ id: tag._id, name: tag.name });
     await createdTag.setTagCategory(tag.category);
   }
 
@@ -57,11 +62,11 @@ connectToMysql(config.mysqlConnectionString).then(async sequelize => {
   }
 
   for (const product of products) {
-    const createdProduct = await Product.create({ id: product.id, ...product });
+    const createdProduct: any = await Product.create({ id: product.id, ...product });
     
     for (const product_category_id of product.categories) {
       if (await ProductCategory.findByPk(product_category_id)) {
-        await createdProduct.addProductCategory(product_category_id);
+        await createdProduct.addProductCategories(product_category_id);
       }
     }
     for (const tag_id of product.tags) {

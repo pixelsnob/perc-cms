@@ -1,5 +1,5 @@
 query findMakerById {
-  findMakerById(id: 1263) {
+  findMakerById(id: 1196) {
     name
     id
   }
@@ -20,14 +20,20 @@ mutation addMaker {
 }
 
 mutation updateMaker {
-  updateMaker(id: 1247, name: "Zzzzzzz") {
+  updateMaker(
+    id: 1196
+    data:{
+      name: "Zzzzzzz"
+    }
+    
+	) {
     name
     id
   }
 }
 
 mutation deleteMaker {
-  deleteMaker(id: 1296) {
+  deleteMaker(id: 1196) {
     id
     name
   }

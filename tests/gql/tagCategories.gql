@@ -1,12 +1,12 @@
 query findTagCategoryById {
-  findTagCategoryById(id: 1) {
+  findTagCategoryById(id: 9) {
     name
     id
   }
 }
 
 query findTagCategories {
-  findTagCategories(order: [{ column: "name", direction: "desc" }]) {
+  findTagCategories {
     name
     id
   }
@@ -20,14 +20,14 @@ mutation addTagCategory {
 }
 
 mutation updateTagCategory {
-  updateTagCategory(id: 5, name: "qqqqqqqq", tagCategory:3) {
+  updateTagCategory(id: 1, data:{name: "qqqqqqqq"}) {
     name
     id
   }
 }
 
 mutation deleteTagCategory {
-  deleteTagCategory(id: 5) {
+  deleteTagCategory(id: 8) {
     id
     name
   }

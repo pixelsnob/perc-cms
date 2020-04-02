@@ -1,5 +1,5 @@
 query findTagById {
-  findTagById(id: 30) {
+  findTagById(id: 1) {
     name
     id
     tagCategory {
@@ -31,7 +31,7 @@ mutation addTag {
 }
 
 mutation updateTag {
-  updateTag(id: 30, name:"f", tagCategory:4) {
+  updateTag(id: 4, data: { name: "f", tagCategory: 999 }) {
     name
     id
     tagCategory {
@@ -41,7 +41,7 @@ mutation updateTag {
 }
 
 mutation deleteTag {
-  deleteTag(id: 30) {
+  deleteTag(id: 4) {
     id
     name
     tagCategory {

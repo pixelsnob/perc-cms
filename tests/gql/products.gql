@@ -1,11 +1,13 @@
 mutation updateProduct {
   updateProduct(
-    id: "604"
-    name: "ehey there"
-    tags: [1]
-    productCategories: []
-    makers: [1261]
-    youtubeVideos: [1,3]
+    id: "612"
+    data:{
+      name: "ehey there"
+      tags: []
+      productCategories: []
+      makers: []
+      youtubeVideos: [1,3]
+    }
   ) {
     name
     id
@@ -28,7 +30,7 @@ mutation updateProduct {
 }
 
 mutation deleteProduct {
-  deleteProduct(id: 604) {
+  deleteProduct(id: 611) {
     id
   }
 }
@@ -36,9 +38,9 @@ mutation deleteProduct {
 mutation addProduct {
   addProduct(
     name: "XXXXXX"
-    tags: [4, 5, 1]
+    tags: []
     productCategories: []
-    makers: [1202, 1222]
+    makers: []
     youtubeVideos: [1]
   ) {
     name
@@ -113,7 +115,7 @@ query queryProducts {
 }
 
 query findProducts {
-  findProducts(offset:1, limit:50, order:[{column:"name",direction:"asc"}]) {
+  findProducts(offset:1, limit:50) {
     name
     id
     price
