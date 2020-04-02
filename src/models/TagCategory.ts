@@ -1,11 +1,11 @@
 
 import { Model, Sequelize, DataTypes } from "sequelize";
 
+export class TagCategory extends Model {
+  public id!: number;
+}
+
 export default function(sequelize: Sequelize) {
-  
-  class TagCategory extends Model {
-    //public id!: number;
-  }
 
   TagCategory.init({
     id: {

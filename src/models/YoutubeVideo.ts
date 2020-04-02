@@ -1,11 +1,12 @@
 
 import { Model, Sequelize, DataTypes } from "sequelize";
 
+export class YoutubeVideo extends Model {
+  public id!: number;
+}
+
 export default function(sequelize: Sequelize) {
-  
-  class YoutubeVideo extends Model {
-    public id!: number;
-  }
+
 
   YoutubeVideo.init({
     id: {

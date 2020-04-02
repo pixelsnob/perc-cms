@@ -2,7 +2,7 @@
 const mongodb = require('mongodb');
 const config = require('../config');
 
-let connection;
+let connection; /////////////
 
 module.exports = function(connectionString) {
   return new Promise(async function(resolve, reject) {
@@ -11,17 +11,17 @@ module.exports = function(connectionString) {
         return null;
       }
 
-      const mongoClient = new mongodb.MongoClient(config.mongoDbConnectionString, {
+      connection= new mongodb.MongoClient(connectionString, {
         useNewUrlParser: true
       });
       
-      mongoClient.connect(function(err) {
+      connection.connect(function(err) {
         if (err) {
           reject(err);
         }
-        resolve(mongoClient);
+        resolve(connection);
       });
-
+      
     } catch (e) {
       reject(e);
     }

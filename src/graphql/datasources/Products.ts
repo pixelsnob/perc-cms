@@ -1,17 +1,8 @@
 
 import SequelizeDatasource from '../../util/SequelizeDatasource';
-
-import Sequelize from 'sequelize';
-
-import { Model, LOCK, Transaction } from "sequelize/types";
+import { Sequelize, LOCK, Transaction, Op, Model } from 'sequelize';
 import { Product } from '../../models/Product';
 import { Tag } from '../../models/Tag';
-
-const { Op } = require("sequelize");
-
-// type NonAbstract<T> = { [P in keyof T]: T[P] }; // "abstract" gets lost here
-// type Constructor<T> = (new () => T);
-// type NonAbstractTypeOfModel<T> = Constructor<T> & NonAbstract<typeof Model>;
 
 class ProductsDatasource extends SequelizeDatasource {
 
@@ -73,14 +64,14 @@ class ProductsDatasource extends SequelizeDatasource {
     return products.map(this.reduce);
   }
 
-  async onAddBeforeCommit(data: Product, createdProduct: typeof Product, transaction: Transaction, lock: LOCK) {
+  async onAddBeforeCommit(data: Product, createdProduct: any, transaction: Transaction, lock: LOCK) {
     await createdProduct.addTags(data.tags, { transaction, lock });
     await createdProduct.addProductCategories(data.productCategories, { transaction, lock });
     await createdProduct.addMakers(data.makers, { transaction, lock });
     await createdProduct.addYoutubeVideos(data.youtubeVideos, { transaction, lock });
   }
 
-  async onUpdateBeforeCommit(data: any, updatedProduct: typeof Product, transaction: Transaction, lock: LOCK) {
+  async onUpdateBeforeCommit(data: any, updatedProduct: any, transaction: Transaction, lock: LOCK) {
     await updatedProduct.setTags(data.tags, { transaction, lock });
     await updatedProduct.setProductCategories(data.productCategories, { transaction, lock });
     await updatedProduct.setMakers(data.makers, { transaction, lock });

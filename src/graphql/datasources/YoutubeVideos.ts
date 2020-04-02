@@ -1,9 +1,10 @@
 
 import SequelizeDatasource from '../../util/SequelizeDatasource'; 
+import { YoutubeVideo } from '../../models/YoutubeVideo';
 
 class YoutubeVideosDatasource extends SequelizeDatasource {
   
-  reduce(youtubeVideo) {
+  reduce(youtubeVideo: YoutubeVideo) {
     return {
       id: youtubeVideo.get('id'),
       description: youtubeVideo.get('description'),
