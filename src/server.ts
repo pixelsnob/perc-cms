@@ -39,7 +39,6 @@ connectToMysql(config.mysqlConnectionString).then((sequelize: Sequelize) => {///
 
   const ProductModel = Product(sequelize);
   ProductModel.associate();
-  //ProductModel.find({});
 
   const ProductCategoryModel = ProductCategory(sequelize);
   const TagModel = Tag(sequelize);
