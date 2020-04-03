@@ -17,22 +17,28 @@ import YoutubeVideoModel, { YoutubeVideo } from './YoutubeVideo';
 export class Product extends Model {
 
   id!: number;
-  tags: [ Tag ];
-  productCategories: [ ProductCategory ];
-  youtubeVideos: [ YoutubeVideo ];
-  makers: [ Maker ] ;
+  tags!: [ Tag ];
+  productCategories!: [ ProductCategory ];
+  youtubeVideos!: [ YoutubeVideo ];
+  makers!: [ Maker ] ;
 
   static associate: () => void;
   
-  addTags: HasManyAddAssociationsMixin<Tag, number>;
-  addProductCategories: HasManyAddAssociationsMixin<ProductCategory, number>;
-  addMakers: HasManyAddAssociationsMixin<Maker, number>;
-  addYoutubeVideos: HasManyAddAssociationsMixin<YoutubeVideo, number>;
+  //addTags!: HasManyAddAssociationsMixin<Tag, number>;
+  addTag!: HasManyAddAssociationsMixin<Tag, number>;
 
-  setTags: HasManySetAssociationsMixin<Tag, number>;
-  setProductCategories: HasManySetAssociationsMixin<ProductCategory, number>;
-  setMakers: HasManySetAssociationsMixin<Maker, number>;
-  setYoutubeVideos: HasManySetAssociationsMixin<YoutubeVideo, number>;
+  //addProductCategories!: HasManyAddAssociationsMixin<ProductCategory, number>;
+  //addMakers!: HasManyAddAssociationsMixin<Maker, number>;
+  addMaker!: HasManyAddAssociationsMixin<Maker, number>;
+
+  //addYoutubeVideos!: HasManyAddAssociationsMixin<YoutubeVideo, number>;
+  addYoutubeVideo!: HasManyAddAssociationsMixin<YoutubeVideo, number>;
+  addProductCategory!: HasManyAddAssociationsMixin<ProductCategory, number>;
+
+  setTags!: HasManySetAssociationsMixin<Tag, number>;
+  setProductCategories!: HasManySetAssociationsMixin<ProductCategory, number>;
+  setMakers!: HasManySetAssociationsMixin<Maker, number>;
+  setYoutubeVideos!: HasManySetAssociationsMixin<YoutubeVideo, number>;
 
 }
 

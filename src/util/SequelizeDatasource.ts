@@ -1,9 +1,5 @@
-import { Model, Sequelize } from "sequelize";
+import { Model, Sequelize, Transaction, LOCK  } from "sequelize";
 import { DataSource, DataSourceConfig } from 'apollo-datasource';
-import { Transaction, LOCK } from 'sequelize/types';
-import { Product } from "../models/Product";
-
-//import { Product } from "../models/Product";
 
 type NonAbstract<T> = { [P in keyof T]: T[P] }; // "abstract" gets lost here
 type Constructor<T> = (new () => T);
@@ -15,14 +11,19 @@ const ASSOCIATIONS_INCLUDE_ALL_NESTED = {
   required: false
 };
 
+// interface ISequelizeDatasource extends SequelizeDatasource {
+//   onAddBeforeCommit?: {
+//     (data: Model, item: Model, transaction: Transaction, lock: LOCK): Promise<void>
+//   }
+// }
+
 class SequelizeDatasource extends DataSource {
 
-  protected model: NonAbstractTypeOfModel<Model>;
-  protected sequelize: Sequelize;
+  model: NonAbstractTypeOfModel<Model>;
+  sequelize: Sequelize | undefined;
 
-  // move these to interface
-  public async onAddBeforeCommit(data: Model, item: Model, transaction: Transaction, lock: LOCK) {}
-  public async onUpdateBeforeCommit(data: Model, item: Model, transaction: Transaction, lock: LOCK) {}
+  async onAddBeforeCommit(data: Model, item: Model, transaction: Transaction, lock: LOCK) {}
+  async onUpdateBeforeCommit(data: Model, item: Model, transaction: Transaction, lock: LOCK) {}
 
   constructor(model: NonAbstractTypeOfModel<Model>) {
     super();
@@ -33,7 +34,7 @@ class SequelizeDatasource extends DataSource {
     this.sequelize = config.context.sequelize;
   }
 
-  async findAll(offset: number, limit: number, order: [{ column: string, direction: string }?] = []) {
+  async findAll(offset: number, limit: number, order: IOrderByInput[] = []) {
     const items = await this.model.findAll({
       include: [ ASSOCIATIONS_INCLUDE_ALL_NESTED ],
       offset,
@@ -61,7 +62,7 @@ class SequelizeDatasource extends DataSource {
   }
 
   async add(data: Model) {
-    const transaction = await this.sequelize.transaction();
+    const transaction = await this.sequelize!.transaction();
     let createdItem = null;
 
     try {
@@ -71,7 +72,7 @@ class SequelizeDatasource extends DataSource {
         //lock: transaction.LOCK.UPDATE
       });
 
-      if (typeof this.onAddBeforeCommit == "function") {
+      //if (typeof this.onAddBeforeCommit == "function") {
         await this.onAddBeforeCommit(
           data,
           createdItem,
@@ -82,7 +83,7 @@ class SequelizeDatasource extends DataSource {
           transaction,
           lock: transaction.LOCK.UPDATE
         });
-      }
+      //}
 
       await transaction.commit();
     } catch (e) {
@@ -94,7 +95,7 @@ class SequelizeDatasource extends DataSource {
   }
 
   async update(id: number, data: Model) {
-    const transaction = await this.sequelize.transaction();
+    const transaction = await this.sequelize!.transaction();
     let updatedItem = null;
     try {
       const item = await this.model.findByPk(id, {
@@ -115,7 +116,7 @@ class SequelizeDatasource extends DataSource {
         //lock: transaction.LOCK.UPDATE
       });
 
-      if (typeof this.onUpdateBeforeCommit == "function") {
+      //if (typeof this.onUpdateBeforeCommit == "function") {
         await this.onUpdateBeforeCommit(
           data,
           updatedItem,
@@ -126,7 +127,7 @@ class SequelizeDatasource extends DataSource {
           transaction,
           lock: transaction.LOCK.UPDATE
         });
-      }
+      //}
 
       await transaction.commit();
     } catch (e) {
@@ -138,7 +139,7 @@ class SequelizeDatasource extends DataSource {
   }
 
   async remove(id: number) {
-    const transaction = await this.sequelize.transaction();
+    const transaction = await this.sequelize!.transaction();
     let item = null;
 
     try {

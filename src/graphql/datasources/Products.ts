@@ -6,7 +6,7 @@ import { Tag } from '../../models/Tag';
 
 class ProductsDatasource extends SequelizeDatasource {
 
-  async query(query: any, offset: number, limit: number, order: [{ column: string, direction: string }]) {
+  async query(query: any, offset: number, limit: number, order: IOrderByInput[] = []) {
     const subqueries = [];
     const listFormat = (arr: []) => arr.map((str: string) => `"${str}"`).join(',');
     if (Array.isArray(query.productCategories) && query.productCategories.length) {
@@ -61,14 +61,14 @@ class ProductsDatasource extends SequelizeDatasource {
       },
       order: order.map(o => [ o.column, o.direction ])
     });
-    return products.map(this.reduce);
+    return products.map(product => this.reduce(<Product>product));
   }
 
   async onAddBeforeCommit(data: Product, product: Product, transaction: Transaction, lock: LOCK) {
-    await product.addTags(data.tags, { transaction, lock });
-    await product.addProductCategories(data.productCategories, { transaction, lock });
-    await product.addMakers(data.makers, { transaction, lock });
-    await product.addYoutubeVideos(data.youtubeVideos, { transaction, lock });
+    await product.setTags(data.tags, { transaction, lock });
+    await product.setProductCategories(data.productCategories, { transaction, lock });
+    await product.setMakers(data.makers, { transaction, lock });
+    await product.setYoutubeVideos(data.youtubeVideos, { transaction, lock });
   }
 
   async onUpdateBeforeCommit(data: Product, product: any, transaction: Transaction, lock: LOCK) {

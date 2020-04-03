@@ -5,12 +5,12 @@ import { Tag } from '../../models/Tag';
 
 class TagsDatasource extends SequelizeDatasource {
   
-  async onAddBeforeCommit(data: any, createdTag: any, transaction: Transaction, lock: LOCK) {
-    await createdTag.setTagCategory(data.tagCategory, { transaction, lock });
+  async onAddBeforeCommit(data: Tag, createdTag: Tag, transaction: Transaction, lock: LOCK) {
+    await createdTag.setTagCategory(data.tagCategory, { transaction });
   }
 
-  async onUpdateBeforeCommit(data: any, updatedTag: any, transaction: Transaction, lock: LOCK) {
-    await updatedTag.setTagCategory(data.tagCategory, { transaction, lock });
+  async onUpdateBeforeCommit(data: Tag, updatedTag: Tag, transaction: Transaction, lock: LOCK) {
+    await updatedTag.setTagCategory(data.tagCategory, { transaction });
   }
 
   reduce(tag: Tag) {

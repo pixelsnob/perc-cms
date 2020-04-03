@@ -49,7 +49,7 @@ connectToMysql(config.mysqlConnectionString).then(async (sequelize: Sequelize) =
   }
 
   for (const tag of tags) {
-    const createdTag: any = await Tag.create({ id: tag._id, name: tag.name });
+    const createdTag = await Tag.create({ id: tag._id, name: tag.name });
     await createdTag.setTagCategory(tag.category);
   }
 
@@ -62,11 +62,11 @@ connectToMysql(config.mysqlConnectionString).then(async (sequelize: Sequelize) =
   }
 
   for (const product of products) {
-    const createdProduct: any = await Product.create({ id: product.id, ...product });
+    const createdProduct = await Product.create({ id: product.id, ...product });
     
     for (const product_category_id of product.categories) {
       if (await ProductCategory.findByPk(product_category_id)) {
-        await createdProduct.addProductCategories(product_category_id);
+        await createdProduct.addProductCategory(product_category_id);
       }
     }
     for (const tag_id of product.tags) {

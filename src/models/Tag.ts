@@ -1,14 +1,17 @@
 
 
-import { Model, Sequelize, DataTypes, HasManySetAssociationsMixin } from "sequelize";
+import { Model, Sequelize, DataTypes, BelongsToSetAssociationMixin } from "sequelize";
 import TagCategoryModel from './TagCategory';
 import { TagCategory } from "./TagCategory";
 
 export class Tag extends Model {
+  // string unkown?
   public id!: number;
-  
+  public tagCategory!: TagCategory;
+
   static associate: () => void;
-  static setTagCategory: HasManySetAssociationsMixin<typeof TagCategory, number>;
+  
+  setTagCategory!: BelongsToSetAssociationMixin<TagCategory, number>;
 
 }
 

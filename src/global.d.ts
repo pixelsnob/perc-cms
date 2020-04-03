@@ -1,34 +1,23 @@
 
-import { Model, HasManyAddAssociationsMixin, HasManySetAssociationsMixin, BuildOptions } from "sequelize";
-import { Tag } from "./models/Tag";
-import { ProductCategory } from "./models/ProductCategory";
-import { Maker } from "./models/Maker";
-import { YoutubeVideo } from "./models/YoutubeVideo";
-import { TagCategory } from "./models/TagCategory";
+//declare global {
 
-  //type NonAbstract<T> = { [P in keyof T]: T[P] }; // "abstract" gets lost here
-  //type Constructor<T> = (new () => T);
-  // So that model instance methods don't get lost
-  //type NonAbstractTypeOfModel<T> = Constructor<T> & NonAbstract<typeof Model>
+interface IFindAllInput {
+  offset: Number
+  limit: number
+  order: IOrderByInput[]
+}
 
-declare global {
+interface IQueryInput {
+  query: any
+  offset: Number
+  limit: number
+  order: IOrderByInput[]
+}
 
-  interface IFindAllInput {
-    offset: Number
-    limit: number
-    order: [
-      { column: string, direction: string }
-    ]
-  }
-
-  interface IQueryInput {
-    query: any
-    offset: Number
-    limit: number
-    order: [
-      { column: string, direction: string }
-    ]
-  }
+interface IOrderByInput {
+  column: string
+  direction: string
+}
 
 //   interface Product extends Model {
 //     readonly id: number;
@@ -143,4 +132,4 @@ declare global {
   // interface YoutubeVideoConstructor {
   //   new(): YoutubeVideoInstance;
   // }
-}
+//}
