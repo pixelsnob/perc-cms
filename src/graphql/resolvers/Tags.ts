@@ -18,12 +18,12 @@ module.exports = {
   Mutation: {
     addTag: (
       _: any,
-      data: NonAbstractTypeOfModel<Tag>,
+      data: Tag,
       { dataSources }: { dataSources: any }
     ) => dataSources.Tags.add(data),
     updateTag: (
       _: any,
-      { id, data }: { id: Number, data: NonAbstractTypeOfModel<Tag> },
+      { id, data }: { id: Number, data: Tag },
       { dataSources }: { dataSources: any }
     ) => dataSources.Tags.update(id, data),
     deleteTag: (

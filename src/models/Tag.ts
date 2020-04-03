@@ -1,6 +1,6 @@
 
 
-import { Model, Sequelize, DataTypes, HasManyAddAssociationsMixin, HasManySetAssociationsMixin } from "sequelize";
+import { Model, Sequelize, DataTypes, HasManySetAssociationsMixin } from "sequelize";
 import TagCategoryModel from './TagCategory';
 import { TagCategory } from "./TagCategory";
 

@@ -18,12 +18,12 @@ module.exports = {
   Mutation: {
     addYoutubeVideo: (
       _: any,
-      data: NonAbstractTypeOfModel<YoutubeVideo>,
+      data: YoutubeVideo,
       { dataSources }: { dataSources: any }
     ) => dataSources.YoutubeVideos.add(data),
     updateYoutubeVideo: (
       _: any,
-      { id, data }: { id: Number, data: NonAbstractTypeOfModel<YoutubeVideo> },
+      { id, data }: { id: Number, data: YoutubeVideo },
       { dataSources }: { dataSources: any }
     ) => dataSources.YoutubeVideos.update(id, data),
     deleteYoutubeVideo: (

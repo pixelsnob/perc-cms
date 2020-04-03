@@ -18,12 +18,12 @@ module.exports = {
   Mutation: {
     addTagCategory: (
       _: any,
-      data: NonAbstractTypeOfModel<TagCategory>,
+      data: TagCategory,
       { dataSources }: { dataSources: any }
     ) => dataSources.TagCategories.add(data),
     updateTagCategory: (
       _: any,
-      { id, data }: { id: Number, data: NonAbstractTypeOfModel<TagCategory> },
+      { id, data }: { id: Number, data: TagCategory },
       { dataSources }: { dataSources: any }
     ) => dataSources.TagCategories.update(id, data),
     deleteTagCategory: (

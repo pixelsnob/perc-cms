@@ -3,11 +3,10 @@ import {
   Model,
   Sequelize,
   DataTypes,
-  //HasManyGetAssociationsMixin,
   HasManyAddAssociationsMixin,
-  //HasManyHasAssociationMixin,
-  //HasManyCreateAssociationMixin,
-  HasManySetAssociationsMixin
+  HasManySetAssociationsMixin,
+  //HasManyAddAssociationsMixin,
+  //HasManySetAssociationsMixin
 } from "sequelize";
 
 import ProductCategoryModel, { ProductCategory } from './ProductCategory';
@@ -17,23 +16,23 @@ import YoutubeVideoModel, { YoutubeVideo } from './YoutubeVideo';
 
 export class Product extends Model {
 
-  public id!: number;
-  public tags: [ typeof TagModel ];
-  public productCategories: [ typeof ProductCategoryModel ];
-  public youtubeVideos: [typeof YoutubeVideoModel];
-  public makers: [typeof MakerModel];
+  id!: number;
+  tags: [ Tag ];
+  productCategories: [ ProductCategory ];
+  youtubeVideos: [ YoutubeVideo ];
+  makers: [ Maker ] ;
 
   static associate: () => void;
+  
+  addTags: HasManyAddAssociationsMixin<Tag, number>;
+  addProductCategories: HasManyAddAssociationsMixin<ProductCategory, number>;
+  addMakers: HasManyAddAssociationsMixin<Maker, number>;
+  addYoutubeVideos: HasManyAddAssociationsMixin<YoutubeVideo, number>;
 
-  static addTags: HasManyAddAssociationsMixin<typeof TagModel, number>;
-  static addProductCategories: HasManyAddAssociationsMixin<typeof ProductCategoryModel, number>;
-  static addMakers: HasManyAddAssociationsMixin<typeof MakerModel, number>;
-  static addYoutubeVideos: HasManyAddAssociationsMixin<typeof YoutubeVideoModel, number>;
-
-  static setTags: HasManySetAssociationsMixin<typeof TagModel, number>;
-  static setProductCategories: HasManySetAssociationsMixin<typeof ProductCategoryModel, number>;
-  static setMakers: HasManySetAssociationsMixin<typeof MakerModel, number>;
-  static setYoutubeVideos: HasManySetAssociationsMixin<typeof YoutubeVideoModel, number>;
+  setTags: HasManySetAssociationsMixin<Tag, number>;
+  setProductCategories: HasManySetAssociationsMixin<ProductCategory, number>;
+  setMakers: HasManySetAssociationsMixin<Maker, number>;
+  setYoutubeVideos: HasManySetAssociationsMixin<YoutubeVideo, number>;
 
 }
 

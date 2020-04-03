@@ -3,9 +3,11 @@ import { DataSource, DataSourceConfig } from 'apollo-datasource';
 import { Transaction, LOCK } from 'sequelize/types';
 import { Product } from "../models/Product";
 
-// type NonAbstract<T> = { [P in keyof T]: T[P] }; // "abstract" gets lost here
-// type Constructor<T> = (new () => T);
-// type NonAbstractTypeOfModel<T> = Constructor<T> & NonAbstract<typeof Model>;
+//import { Product } from "../models/Product";
+
+type NonAbstract<T> = { [P in keyof T]: T[P] }; // "abstract" gets lost here
+type Constructor<T> = (new () => T);
+type NonAbstractTypeOfModel<T> = Constructor<T> & NonAbstract<typeof Model>;
 
 const ASSOCIATIONS_INCLUDE_ALL_NESTED = {
   all: true,
@@ -13,13 +15,14 @@ const ASSOCIATIONS_INCLUDE_ALL_NESTED = {
   required: false
 };
 
-class SequelizeDatasource extends DataSource<NonAbstractTypeOfModel<Model>> {
+class SequelizeDatasource extends DataSource {
 
   protected model: NonAbstractTypeOfModel<Model>;
   protected sequelize: Sequelize;
 
-  public async onAddBeforeCommit(data: any, item: Model, transaction: Transaction, lock: LOCK) {}
-  public async onUpdateBeforeCommit(data: any, item: Model, transaction: Transaction, lock: LOCK) {}
+  // move these to interface
+  public async onAddBeforeCommit(data: Model, item: Model, transaction: Transaction, lock: LOCK) {}
+  public async onUpdateBeforeCommit(data: Model, item: Model, transaction: Transaction, lock: LOCK) {}
 
   constructor(model: NonAbstractTypeOfModel<Model>) {
     super();

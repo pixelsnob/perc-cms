@@ -18,12 +18,12 @@ module.exports = {
   Mutation: {
     addMaker: (
       _: any,
-      data: NonAbstractTypeOfModel<Maker>,
+      data: Maker,
       { dataSources }: { dataSources: any }
     ) => dataSources.Makers.add(data),
     updateMaker: (
       _: any,
-      { id, data }: { id: Number, data: NonAbstractTypeOfModel<Maker> },
+      { id, data }: { id: Number, data: Maker },
       { dataSources }: { dataSources: any }
     ) => dataSources.Makers.update(id, data),
     deleteMaker: (

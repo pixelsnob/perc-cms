@@ -64,18 +64,18 @@ class ProductsDatasource extends SequelizeDatasource {
     return products.map(this.reduce);
   }
 
-  async onAddBeforeCommit(data: Product, createdProduct: any, transaction: Transaction, lock: LOCK) {
-    await createdProduct.addTags(data.tags, { transaction, lock });
-    await createdProduct.addProductCategories(data.productCategories, { transaction, lock });
-    await createdProduct.addMakers(data.makers, { transaction, lock });
-    await createdProduct.addYoutubeVideos(data.youtubeVideos, { transaction, lock });
+  async onAddBeforeCommit(data: Product, product: Product, transaction: Transaction, lock: LOCK) {
+    await product.addTags(data.tags, { transaction, lock });
+    await product.addProductCategories(data.productCategories, { transaction, lock });
+    await product.addMakers(data.makers, { transaction, lock });
+    await product.addYoutubeVideos(data.youtubeVideos, { transaction, lock });
   }
 
-  async onUpdateBeforeCommit(data: any, updatedProduct: any, transaction: Transaction, lock: LOCK) {
-    await updatedProduct.setTags(data.tags, { transaction, lock });
-    await updatedProduct.setProductCategories(data.productCategories, { transaction, lock });
-    await updatedProduct.setMakers(data.makers, { transaction, lock });
-    await updatedProduct.setYoutubeVideos(data.youtubeVideos, { transaction, lock });
+  async onUpdateBeforeCommit(data: Product, product: any, transaction: Transaction, lock: LOCK) {
+    await product.setTags(data.tags, { transaction, lock });
+    await product.setProductCategories(data.productCategories, { transaction, lock });
+    await product.setMakers(data.makers, { transaction, lock });
+    await product.setYoutubeVideos(data.youtubeVideos, { transaction, lock });
   }
   
   reduce(product: Product) {

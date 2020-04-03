@@ -23,12 +23,12 @@ module.exports = {
   Mutation: {
     addProduct: (
       _: any,
-      data: NonAbstractTypeOfModel<Product>,
+      data: Product,
       { dataSources }: { dataSources: any }
     ) => dataSources.Products.add(data),
     updateProduct: (
       _: any,
-      { id, data }: { id: Number, data: NonAbstractTypeOfModel<Product> },
+      { id, data }: { id: Number, data: Product },
       { dataSources }: { dataSources: any } ////
     ) => dataSources.Products.update(id, data),
     deleteProduct: (
