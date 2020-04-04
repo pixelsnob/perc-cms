@@ -1,11 +1,11 @@
 import { Sequelize } from "sequelize/types";
 
-const connectToMysql = require('./connectToMysql');
-const connectToMongo = require('./connectToMongo');
+const connectToMysql = require('./util/connectToMysql');
+const connectToMongo = require('./util/connectToMongo');
 
-const config = require('../config');
+const config = require('./config');
 
-import ProductModel, { Product } from './models/Product';
+import ProductModel from './models/Product';
 import ProductCategoryModel from './models/ProductCategory';
 import TagCategoryModel from './models/TagCategory';
 

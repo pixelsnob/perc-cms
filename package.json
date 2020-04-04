@@ -8,7 +8,7 @@
     "dev-staging": "NODE_ENV=development nodemon dist/server.js --watch dist/ --signal SIGHUP",
     "build-watch": "tsc --watch",
     "build": "tsc",
-    "migrate": "node dist/util/migrate.js"
+    "migrate": "node dist/migrate.js"
   },
   "dependencies": {
     "apollo-boost": "^0.4.7",

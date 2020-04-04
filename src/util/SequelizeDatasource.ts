@@ -50,7 +50,7 @@ class SequelizeDatasource extends DataSource {
     });
 
     if (!item) {
-      throw new Error(`${this.model.name} not found!`);
+      throw new Error(`${this.model.name} with id ${id} not found!`);
     }
 
     return this.reduce(item);
@@ -98,7 +98,7 @@ class SequelizeDatasource extends DataSource {
       });
 
       if (!item) {
-        throw new Error(`${this.model.name} not found!`);
+        throw new Error(`${this.model.name} with id ${id} not found!`);
       }
 
       updatedItem = await item.update(data, {
@@ -140,7 +140,7 @@ class SequelizeDatasource extends DataSource {
         lock: transaction.LOCK.UPDATE
       });
       if (!item) {
-        throw new Error(`${this.model.name} not found!`);
+        throw new Error(`${this.model.name} with id ${id} not found!`);
       }
 
       const res = await this.model.destroy({
@@ -154,7 +154,7 @@ class SequelizeDatasource extends DataSource {
       transaction.commit();
 
       if (!res) {
-        throw new Error(`${this.model.name} was not removed!`);
+        throw new Error(`${this.model.name} with id ${id} was not removed!`);
       }
     } catch (e) {
       transaction.rollback();

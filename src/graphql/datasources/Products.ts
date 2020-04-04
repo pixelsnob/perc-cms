@@ -46,7 +46,7 @@ class ProductsDatasource extends SequelizeDatasource {
       });
     }
     
-    const products = await Product.findAll({
+    const products = await this.model.findAll({
       include: [{ all: true } ],
       offset,
       limit,
