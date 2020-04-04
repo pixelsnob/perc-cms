@@ -6,7 +6,8 @@
   "module": "true",
   "scripts": {
     "dev-staging": "NODE_ENV=development nodemon dist/server.js --watch dist/ --signal SIGHUP",
-    "build": "tsc --watch"
+    "build": "tsc --watch",
+    "migrate": "node dist/util/migrate.js"
   },
   "dependencies": {
     
