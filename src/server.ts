@@ -33,9 +33,7 @@ import YoutubeVideo from './models/YoutubeVideo';
 
 const config = require('./config');
 
-connectToMysql(config.mysqlConnectionString).then((sequelize: Sequelize) => {////////
-
-  //const productRepository = sequelize.getRepository(Product);
+connectToMysql(config.mysqlConnectionString).then((sequelize: Sequelize) => {
 
   const ProductModel = Product(sequelize);
   ProductModel.associate();
@@ -43,7 +41,7 @@ connectToMysql(config.mysqlConnectionString).then((sequelize: Sequelize) => {///
   const ProductCategoryModel = ProductCategory(sequelize);
   const TagModel = Tag(sequelize);
   TagModel.associate();
-  
+
   const MakerModel = Maker(sequelize);
   const YoutubeVideoModel = YoutubeVideo(sequelize);
   const TagCategoryModel = TagCategory(sequelize);
@@ -74,20 +72,17 @@ connectToMysql(config.mysqlConnectionString).then((sequelize: Sequelize) => {///
     context: async () => {
       return { sequelize };
     },
-    // formatError: err => {
-    //   console.error(err);
-    //   return err;
-    // },
+    cacheControl: {
+      defaultMaxAge: 10
+    },
+    plugins: (() => process.env.NODE_ENV == 'production' ? [responseCachePlugin()] : [])()
 
-    // cacheControl: {
-    //   defaultMaxAge: 10,
-    // },
-    // plugins: [ responseCachePlugin() ]
+
   });
-  
+
   const app = express();
   server.applyMiddleware({ app });
-  
+
   app.listen({ port: 4000 }, () =>
     console.log(`Server ready at http://localhost:4000${server.graphqlPath}`)
   );

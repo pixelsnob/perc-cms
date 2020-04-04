@@ -1,23 +1,23 @@
 
 const Sequelize = require('sequelize');
 
-let connection;
+let sequelize: typeof Sequelize;
 
-module.exports = function(connectionString) {
+module.exports = function(connectionString: string) {
   return new Promise(async function(resolve, reject) {
-    if (connection) {
-      resolve(connection);
+    if (sequelize) {
+      resolve(sequelize);
       return null;
     }
     try {
-      connection = new Sequelize(connectionString, {
+      sequelize = new Sequelize(connectionString, {
         define: {
           charset: 'utf8'
         },
         //logging: false
       });
-      await connection.authenticate();
-      resolve(connection)
+      await sequelize.authenticate();
+      resolve(sequelize)
     } catch (e) {
       reject(e);
     }

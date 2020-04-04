@@ -3,15 +3,15 @@ import { Sequelize } from "sequelize/types";
 const connectToMysql = require('./connectToMysql');
 const connectToMongo = require('./connectToMongo');
 
-const config =require ('../config');
+const config = require('../config');
 
-import ProductModel, { Product } from '../models/Product';
-import ProductCategoryModel from '../models/ProductCategory';
-import TagCategoryModel from '../models/TagCategory';
+import ProductModel, { Product } from './models/Product';
+import ProductCategoryModel from './models/ProductCategory';
+import TagCategoryModel from './models/TagCategory';
 
-import TagModel from '../models/Tag';
-import MakerModel from '../models/Maker';
-import YoutubeVideoModel from '../models/YoutubeVideo';
+import TagModel from './models/Tag';
+import MakerModel from './models/Maker';
+import YoutubeVideoModel from './models/YoutubeVideo';
 
 connectToMysql(config.mysqlConnectionString).then(async (sequelize: Sequelize) => {
 
