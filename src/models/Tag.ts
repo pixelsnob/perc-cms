@@ -5,8 +5,9 @@ import TagCategoryModel from './TagCategory';
 import { TagCategory } from "./TagCategory";
 
 export class Tag extends Model {
-  // string unkown?
+  
   public id!: number;
+  public name!: string;
   public tagCategory!: TagCategory;
 
   static associate: () => void;

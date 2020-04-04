@@ -4,12 +4,12 @@ module.exports = {
 
   Query: {
     findTagCategories: (
-      _: any,
+      _: void,
       { offset, limit, order }: IFindAllInput,
       { dataSources }: { dataSources: any }
     ) => dataSources.TagCategories.findAll(offset, limit, order),
     findTagCategoryById: (
-      _: any,
+      _: void,
       { id }: { id: Number },
       { dataSources }: { dataSources: any }
     ) => dataSources.TagCategories.findById(id)
@@ -17,17 +17,17 @@ module.exports = {
   
   Mutation: {
     addTagCategory: (
-      _: any,
+      _: void,
       data: TagCategory,
       { dataSources }: { dataSources: any }
     ) => dataSources.TagCategories.add(data),
     updateTagCategory: (
-      _: any,
+      _: void,
       { id, data }: { id: Number, data: TagCategory },
       { dataSources }: { dataSources: any }
     ) => dataSources.TagCategories.update(id, data),
     deleteTagCategory: (
-      _: any,
+      _: void,
       { id }: { id: Number },
       { dataSources }: { dataSources: any }
     ) => dataSources.TagCategories.remove(id)

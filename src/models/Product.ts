@@ -5,8 +5,6 @@ import {
   DataTypes,
   HasManyAddAssociationsMixin,
   HasManySetAssociationsMixin,
-  //HasManyAddAssociationsMixin,
-  //HasManySetAssociationsMixin
 } from "sequelize";
 
 import ProductCategoryModel, { ProductCategory } from './ProductCategory';
@@ -17,21 +15,19 @@ import YoutubeVideoModel, { YoutubeVideo } from './YoutubeVideo';
 export class Product extends Model {
 
   id!: number;
+  name!: string;
   tags!: [ Tag ];
   productCategories!: [ ProductCategory ];
   youtubeVideos!: [ YoutubeVideo ];
-  makers!: [ Maker ] ;
+  makers!: [ Maker ];
+  price!: string;
 
   static associate: () => void;
   
-  //addTags!: HasManyAddAssociationsMixin<Tag, number>;
   addTag!: HasManyAddAssociationsMixin<Tag, number>;
 
-  //addProductCategories!: HasManyAddAssociationsMixin<ProductCategory, number>;
-  //addMakers!: HasManyAddAssociationsMixin<Maker, number>;
   addMaker!: HasManyAddAssociationsMixin<Maker, number>;
 
-  //addYoutubeVideos!: HasManyAddAssociationsMixin<YoutubeVideo, number>;
   addYoutubeVideo!: HasManyAddAssociationsMixin<YoutubeVideo, number>;
   addProductCategory!: HasManyAddAssociationsMixin<ProductCategory, number>;
 

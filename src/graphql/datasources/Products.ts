@@ -46,11 +46,7 @@ class ProductsDatasource extends SequelizeDatasource {
       });
     }
     
-    const products = await this.model.findAll({
-      // include: [{
-      //   all: true,
-      //   nested: true,
-      // }],
+    const products = await Product.findAll({
       include: [{ all: true } ],
       offset,
       limit,
@@ -71,20 +67,20 @@ class ProductsDatasource extends SequelizeDatasource {
     await product.setYoutubeVideos(data.youtubeVideos, { transaction, lock });
   }
 
-  async onUpdateBeforeCommit(data: Product, product: any, transaction: Transaction, lock: LOCK) {
+  async onUpdateBeforeCommit(data: Product, product: Product, transaction: Transaction, lock: LOCK) {
     await product.setTags(data.tags, { transaction, lock });
     await product.setProductCategories(data.productCategories, { transaction, lock });
     await product.setMakers(data.makers, { transaction, lock });
     await product.setYoutubeVideos(data.youtubeVideos, { transaction, lock });
   }
-  
+
   reduce(product: Product) {
     return {
       id: product.get('id'),
       name: product.get('name'),
-      productCategories: product.get('ProductCategories'),
+      productCategories: product.get('productCategories'),
       makers: product.get('Makers'),
-      tags: (product.get('Tags') as [ Tag ]).map(tag => ({
+      tags: (product.get('Tags') as Tag[]).map(tag => ({
         id: tag.get('id'),
         name: tag.get('name'),
         tagCategory: tag.get('TagCategory')

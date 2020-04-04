@@ -4,12 +4,12 @@ module.exports = {
 
   Query: {
     findYoutubeVideos: (
-      _: any,
+      _: void,
       { offset, limit, order }: IFindAllInput,
       { dataSources }: { dataSources: any }
     ) => dataSources.YoutubeVideos.findAll(offset, limit, order),
     findYoutubeVideoById: (
-      _: any,
+      _: void,
       { id }: { id: Number },
       { dataSources }: { dataSources: any }
     ) => dataSources.YoutubeVideos.findById(id)
@@ -17,17 +17,17 @@ module.exports = {
   
   Mutation: {
     addYoutubeVideo: (
-      _: any,
+      _: void,
       data: YoutubeVideo,
       { dataSources }: { dataSources: any }
     ) => dataSources.YoutubeVideos.add(data),
     updateYoutubeVideo: (
-      _: any,
+      _: void,
       { id, data }: { id: Number, data: YoutubeVideo },
       { dataSources }: { dataSources: any }
     ) => dataSources.YoutubeVideos.update(id, data),
     deleteYoutubeVideo: (
-      _: any,
+      _: void,
       { id }: { id: Number },
       { dataSources }: { dataSources: any }
     ) => dataSources.YoutubeVideos.remove(id),

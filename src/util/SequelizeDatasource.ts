@@ -11,19 +11,14 @@ const ASSOCIATIONS_INCLUDE_ALL_NESTED = {
   required: false
 };
 
-// interface ISequelizeDatasource extends SequelizeDatasource {
-//   onAddBeforeCommit?: {
-//     (data: Model, item: Model, transaction: Transaction, lock: LOCK): Promise<void>
-//   }
-// }
-
 class SequelizeDatasource extends DataSource {
 
-  model: NonAbstractTypeOfModel<Model>;
-  sequelize: Sequelize | undefined;
+  protected readonly model: NonAbstractTypeOfModel<Model>;
+  protected sequelize: Sequelize | undefined;
 
-  async onAddBeforeCommit(data: Model, item: Model, transaction: Transaction, lock: LOCK) {}
-  async onUpdateBeforeCommit(data: Model, item: Model, transaction: Transaction, lock: LOCK) {}
+  // Optional methods
+  protected async onAddBeforeCommit(data: Model, item: Model, transaction: Transaction, lock: LOCK) {}
+  protected async onUpdateBeforeCommit(data: Model, item: Model, transaction: Transaction, lock: LOCK) {}
 
   constructor(model: NonAbstractTypeOfModel<Model>) {
     super();
@@ -72,18 +67,16 @@ class SequelizeDatasource extends DataSource {
         //lock: transaction.LOCK.UPDATE
       });
 
-      //if (typeof this.onAddBeforeCommit == "function") {
-        await this.onAddBeforeCommit(
-          data,
-          createdItem,
-          transaction,
-          transaction.LOCK.UPDATE
-        );
-        await createdItem.reload({
-          transaction,
-          lock: transaction.LOCK.UPDATE
-        });
-      //}
+      await this.onAddBeforeCommit(
+        data,
+        createdItem,
+        transaction,
+        transaction.LOCK.UPDATE
+      );
+      await createdItem.reload({
+        transaction,
+        lock: transaction.LOCK.UPDATE
+      });
 
       await transaction.commit();
     } catch (e) {
@@ -116,18 +109,16 @@ class SequelizeDatasource extends DataSource {
         //lock: transaction.LOCK.UPDATE
       });
 
-      //if (typeof this.onUpdateBeforeCommit == "function") {
-        await this.onUpdateBeforeCommit(
-          data,
-          updatedItem,
-          transaction,
-          transaction.LOCK.UPDATE
-        );
-        await updatedItem.reload({
-          transaction,
-          lock: transaction.LOCK.UPDATE
-        });
-      //}
+      await this.onUpdateBeforeCommit(
+        data,
+        updatedItem,
+        transaction,
+        transaction.LOCK.UPDATE
+      );
+      await updatedItem.reload({
+        transaction,
+        lock: transaction.LOCK.UPDATE
+      });
 
       await transaction.commit();
     } catch (e) {
@@ -159,16 +150,6 @@ class SequelizeDatasource extends DataSource {
         transaction
         //lock: transaction.LOCK.UPDATE
       });
-
-      // if (typeof this.onRemoveBeforeCommit == 'function') {
-      //   await this.onRemoveBeforeCommit(
-      //     data,
-      //     item,
-      //     transaction,
-      //     transaction.LOCK.UPDATE
-      //   );
-      //   await item.reload({ transaction, lock: transaction.LOCK.UPDATE });
-      // }
 
       transaction.commit();
 

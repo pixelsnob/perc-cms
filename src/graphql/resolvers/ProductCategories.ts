@@ -4,12 +4,12 @@ module.exports = {
 
   Query: {
     findProductCategories: (
-      _: any,
+      _: void,
       { offset, limit, order }: IFindAllInput,
       { dataSources }: { dataSources: any }
     ) => dataSources.ProductCategories.findAll(offset, limit, order),
     findProductCategoryById: (
-      _: any,
+      _: void,
       { id }: { id: Number },
       { dataSources }: { dataSources: any }
     ) => dataSources.ProductCategories.findById(id)
@@ -17,17 +17,17 @@ module.exports = {
   
   Mutation: {
     addProductCategory: (
-      _: any,
+      _: void,
       data: ProductCategory,
       { dataSources }: { dataSources: any }
     ) => dataSources.ProductCategories.add(data),
     updateProductCategory: (
-      _: any,
+      _: void,
       { id, data }: { id: Number, data: ProductCategory },
       { dataSources }: { dataSources: any }
     ) => dataSources.ProductCategories.update(id, data),
     deleteProductCategory: (
-      _: any,
+      _: void,
       { id }: { id: Number },
       { dataSources }: { dataSources: any }
     ) => dataSources.ProductCategories.remove(id),
